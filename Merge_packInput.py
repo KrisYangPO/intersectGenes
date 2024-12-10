@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # multiple selection of DEGs 
-# create: 2024/7/20
+# create: 2024/12/06
 
 from Merge_filterDEGs import *
 from Merge_multiMerge import *
 from Merge_formGeneDict import *
+import pandas as pd
 
 
 # In[] read input information dictionary and decide which algorithms should be performed.
@@ -14,7 +15,6 @@ def gainInput(input_dict):
     gene_dicts = []
     all_cols = []
     outname = []
-    
 
     # read DESeq2 output table file:
     if input_dict["mode"] == "DEG":   
@@ -22,7 +22,15 @@ def gainInput(input_dict):
         # specifically input DESeq2 output table.
         # read files and create their gene_dictionaries
         df, col, filename = readDataframe(input_dict["DESeq_file"])
-        df = multiselect_DEG(df, input_dict["select"], input_dict["value"])
+        df, report_dict = multiselect_DEG_advanced(df, input_dict["select"], input_dict["value"], input_dict["Select_mode"])
+        col.append("indicator")
+
+        # write a report file for DEGs selection:
+        DEGs_report = pd.DataFrame(report_dict)
+        print(DEGs_report)
+        DEGs_report.to_excel("DEGs_select_report.xlsx")
+
+        # Add a column name for DEG indicator at the end of the selected DESeq2 table.
         gene_dict = createGeneDict(df, g_index = input_dict["DESeq_index"])
         
         # append to a list 

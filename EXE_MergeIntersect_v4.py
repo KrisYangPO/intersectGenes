@@ -10,7 +10,7 @@ However, the clusters of each dataframe is still not separated in this job.
 
 import os
 from glob import glob
-from Merge_PIPE import *
+from PIPE_merge import *
 
 
 # # In[] DEG mode
