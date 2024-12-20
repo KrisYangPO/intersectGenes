@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # multiple selection of DEGs 
-# create: 2024/7/9
+# create: 2024/12/16
 
 """
 For selecting DEGs, the program considers 3 factors: p-value, p.adj, and foldchange.
@@ -49,7 +49,7 @@ def multiselect_DEG(df, select, value):
 def multiselect_DEG_advanced(df, select, value, mode):
     # check whether number of select and its values is equivalent.
     if len(select) != len(value):
-        print("FilterDEGs: Missing value or missing target")
+        print("ERROR(FilterDEGs): Missing value or missing target")
         return   
     
 
@@ -142,27 +142,123 @@ def multiselect_DEG_advanced(df, select, value, mode):
 
 
 
+# Advanced DEGs selection:
+def multiselect_DEG_advanced2(df, select_dict):
+    
+
+    # check whether selectors are present in DESeq2 table columns:
+    for key, value in select_dict.items(): 
+        if key not in df.columns:
+            print("ERROR(FilterDEGs): Unknown column ID: ", key, "...Abort.")
+            return
+
+
+    # iteratively filter out expected data via targeted column:
+    # report selection conditions:
+    report = {"Select column":[],
+              "Select mode": [],
+              "threshold": [],
+              "selected size": [], 
+              "Stat": []} 
+
+    for key, value in select_dict.items():
+        select_target = key
+        select_mode = value[0]
+        select_value = value[1]
+        size = len(df)
+        stat = "OK"
+
+
+        # select above value or below value:
+        if (select_mode).upper() == "BELOW":
+            selection = df[select_target] < select_value
+            df = df[selection]
+            size = len(df)
+
+        elif (select_mode).upper() == "ABOVE":
+            selection = df[select_target] > select_value
+            df = df[selection]
+            size = len(df)
+
+        # select values in a range or outer a range: 
+        elif (select_mode).upper() in ["RANGE", "OUTER"]:
+            
+            # check whether there are two value in the mode:
+            # check whether min value < max value:
+            if (len(select_value) > 1) and (select_value[0] < select_value[1]):
+                selection = ( df[select_target] > select_value[0]) & (df[select_target] < select_value[1])
+                
+                if (select_mode).upper() == "RANGE":
+                    df = df[selection]
+                    size = len(df)
+
+                elif (select_mode).upper() == "OUTER":
+                    df = df[~selection]
+                    size = len(df)
+
+            else: 
+                if len(select_value) <= 1:
+                    print("ERROR(FilterDEGs): Choose mode: ", select_mode, " with its value: ", select_value, "\n\t", "Missing values for range.")
+                    return
+                elif select_value[0] >= select_value[1]:
+                    print("ERROR(FilterDEGs): minimum value: ", select_value[0], " should lower than Maximum value: ", select_value[1])
+                    return 
+            
+
+        # report unknown selector:     
+        else:
+            print("ERROR(FilterDEGs): Selection mode: ", select_mode, " was not defined for any selection way. Abort.")
+            print("ERROR(FilterDEGs): Available selections include: Below, Above, Range, and Outer.")
+            return
+        
+        
+        # report selection state     
+        if size < 1:
+            stat = "Selection TOO Strong"
+            print("WARNING(FilterDEGs): No Remaining data after selection: ", select_target, " with value: ", select_value)
+
+
+        # Report storing:
+        report["Select column"].append(select_target)
+        report["Select mode"].append(select_mode)
+        report["threshold"].append(select_value)
+        report["selected size"].append(size)
+        report["Stat"].append(stat)
+
+
+    # indicates DEGs based on Log2Foldchange values:
+    df["DEGs_indicator"] = "DOWN"
+    df.loc[df["log2FoldChange"] > 0, "DEGs_indicator"] = "UP"
+    
+    # return selected dataframe
+    return df.dropna(), report
+
+
 
 # In[] test
 def main():
     import pandas as pd
-    p = r"/Users/popoyang/Documents/Coding/Python/NGS/hypergeometric(HypGeo)/HypGeo_*newAlgo/test/"
+    p = r"/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_DEG_select/"
     df = pd.read_csv(p + "DESeq2_geneDEG.txt", sep = "\t")
     #print(df)
 
-    select = ["pvalue", "padj", "log2FoldChange"]
-    value = [0.05, 0.05, [-1,1]]
-    mode = ["BELOW", "BELOW", "RANGE"]
+    # select = ["pvalue", "padj", "log2FoldChange"]
+    # value = [0.05, 0.05, [-1,1]]
+    # mode = ["BELOW", "BELOW", "RANGE"]
 
-    # select = ["log2FoldChange"]
-    # value = [[-1,1]]
-    # mode = ["RANGE"]
-
-    df2, report_dict = multiselect_DEG_advanced(df, select, value, mode)
+    selection_dict = {"pvalue":["BELOW", 0.05], 
+                      "padj":["BELOW", 0.05],
+                      "log2FoldChange": ["RANGE", [-1, 1]]}
+    
+    df2, report_dict = multiselect_DEG_advanced2(df, selection_dict)
+    # df2, report_dict = multiselect_DEG_advanced(df, select, value, mode)
+    
     df2_report = pd.DataFrame(report_dict)
 
     print(df2.head(5))
     print(df2_report)
+
+
 
 # call function
 if __name__ == "__main__":

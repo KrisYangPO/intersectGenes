@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # multiple selection of DEGs 
-# create: 2024/12/06
+# create: 2024/12/16
 
-from Merge_filterDEGs import *
+from Merge_filterDEGs_v2 import *
 from Merge_multiMerge import *
 from Merge_formGeneDict import *
 import pandas as pd
@@ -22,10 +22,10 @@ def gainInput(input_dict):
         # specifically input DESeq2 output table.
         # read files and create their gene_dictionaries
         df, col, filename = readDataframe(input_dict["DESeq_file"])
-        df, report_dict = multiselect_DEG_advanced(df, input_dict["select"], input_dict["value"], input_dict["Select_mode"])
+        df, report_dict = multiselect_DEG_advanced2(df, input_dict["DEG_selection"])
         col.append("indicator")
 
-        # write a report file for DEGs selection:
+        # write a report file:
         DEGs_report = pd.DataFrame(report_dict)
         print(DEGs_report)
         DEGs_report.to_excel("DEGs_select_report.xlsx")
@@ -44,7 +44,7 @@ def gainInput(input_dict):
         
         # read files and create their gene_dictionaries
         df, col, filename = readDataframe(file)
-        gene_dict = createGeneDict(df, g_index = input_dict["index"])
+        gene_dict = createGeneDict(df, g_index = input_dict["index"][0])
 
         # append to a list 
         gene_dicts.append(gene_dict)
