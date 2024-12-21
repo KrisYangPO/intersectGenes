@@ -59,7 +59,7 @@ def clustersMerged_multi(input_dict, match_df):
     
     # In[]
     # Output the lengths of compared clusters:
-    cluster_num_df = pd.DataFrame.from_dict(clusters_num, orient = "index")
+    cluster_num_df = pd.DataFrame.from_dict(clusters_num, orient = "index", columns = ["Target number"])
     print("ClusterReport: Clustering summary: \n", cluster_num_df)
     
     cluster_num_df.to_excel(outputname_clus.replace("Cluster_", "Cluster_SumN_"), index = "False", header = "Gene number")

@@ -53,11 +53,11 @@ def createGeneDict(df, g_index):
 
     # check transposing:
     if len(dft.iloc[0,:]) != len(df.iloc[:,0]):
-        print("Create Dict: Missing rows or erroneous column number after transposing!")
+        print("CreateDictERROR: Missing rows or erroneous column number after transposing!")
         return
 
-    print(dft.head(5))
-    print(df.head(5))
+    # print(dft.head(5))
+    # print(df.head(5))
 
 
     # create dictionary data based on gene list:
@@ -73,18 +73,18 @@ def createGeneDict(df, g_index):
         if gene not in gene_Datadict:
             gene_Datadict[gene] = genedata
         else: 
-            print("Create Dict: Gene: ",gene, " has been added into gene list.") 
+            print("CreateDictERROR: Gene: ",gene, " has been added into gene list.") 
             continue
 
         # check whether there is a key:information miss-match:
         if gene != gene_Datadict[gene][g_index].upper():
-            print("Create Dict: Gene ID: ",gene, " was not match to its information (values)")
+            print("CreateDictERROR: Gene ID: ",gene, " was not match to its information (values)")
             return 
 
 
     # check whether there is a missing value:
     if len(gene_Datadict) != len(dft.iloc[0,:]):
-        print("Create Dict: Missing Value after creating geneData_Dict")
+        print("CreateDictERROR: Missing Value after creating geneData_Dict")
         # return
 
     return gene_Datadict

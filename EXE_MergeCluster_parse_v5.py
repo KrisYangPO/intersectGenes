@@ -5,8 +5,8 @@
 import pandas as pd
 from glob import glob
 from PIPE_Parse import *
-from PIPE_Merge import *
-from PIPE_Cluster import * 
+from PIPE_merge import *
+from PIPE_cluster import * 
 
 
 # invoke:
@@ -23,7 +23,7 @@ def main():
         match, unmatch = compare_mergeMulti(input_dict)
 
 
-    else: print("InputSummary: Unknown Mode: ", input_dict["mode"])
+    else: print("InputSummaryERROR: Unknown Mode: ", input_dict["mode"])
     
     # clustering:
     cluster_dicts = clustersMerged_multi(input_dict, match)

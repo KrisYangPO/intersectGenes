@@ -123,6 +123,7 @@ def parseInput():
     print(f"{"padj:":<{blank}} {inputProg.padj}")
     print(f"{"Log2FC:":<{blank}} {inputProg.log2FC}")
     print(f"{"Select mode:":<{blank}} {inputProg.selectionMmode}")
+    print(f"{"Reverse select:":<{blank}} {inputProg.reverse}")  
     print(f"{"Cluster indexes:":<{blank}} {inputProg.clusterIndexes}")
 
     return inputProg

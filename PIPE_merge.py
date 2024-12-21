@@ -4,7 +4,7 @@
 
 import pandas as pd
 from glob import glob
-from Merge_filterDEGs import *
+from Merge_filterDEGs_v2 import *
 from Merge_multiMerge import *
 from Merge_formGeneDict import *
 from Merge_packInput import *
@@ -24,7 +24,7 @@ def compare_DEGsMerge(input_dict):
     # read file and create its gene_dictionary:
     # If it is a DEG comparison, the DEGs gene dict will be place at first index of these three outputs. 
     gene_dicts, cols, outname = gainInput(input_dict)
-    print("1. GeneID_dicts have been created.")
+    print("DEGsMerge: 1. GeneID_dicts have been created.")
 
 
     # merge each gene_dict with DESeq2 output table:
@@ -39,16 +39,16 @@ def compare_DEGsMerge(input_dict):
             unmatch_dict.append(unmatch)
 
     else:
-        print("Your mode is: ", input["mode"], "\n","This function is required for DEGs comparison mode; use compare_mergeMulti() instead.")
+        print("DEGsMergeERROR: Your mode is: ", input["mode"], "\n","This function is required for DEGs comparison mode; use compare_mergeMulti() instead.")
         return
 
 
     # check length
     if len(match_dict) != len(unmatch_dict):
-        print("EXE: Missing value after MERGE.")
+        print("DEGsMergeERROR: Missing value after MERGE.")
         return
     
-    print("2. Files merging completed.")
+    print("DEGsMerge: 2. Files merging completed.")
     
     # output data
     # "+1" from the cols and the outname is used to exclude DESeq table's information
@@ -62,7 +62,7 @@ def compare_DEGsMerge(input_dict):
         match_df.to_csv(input_dict["outputpath"] + "MERGE_DEGs_" + outname[i+1]+ ".bed", sep = "\t")
         unmatch_df.to_csv(input_dict["outputpath"] + "unmatch_MERGE_DEGs_" + outname[i+1]+ ".bed", sep = "\t")
 
-    print("Finished!!")
+    print("DEGsMerge: 3. Finished!!")
 
     return match_df, unmatch_df
 
@@ -76,14 +76,14 @@ def compare_mergeMulti(input_dict):
     # read file and create its gene_dictionary:
     # If it is a DEG comparison, the DEGs gene dict will be place at first index of these three outputs. 
     gene_dicts, cols, outname = gainInput(input_dict)
-    print("1. Data has received.")
+    print("DEGsMerge: 1. Data has received.")
 
     # merge each gene_dict with DESeq2 output table:
     # perform extracting overlapping genes from all clusters.
     # perform multi-Gene dictionaries merging based on overlapping gene reference.
 
     match_dict, unmatch_dict = mergeMultiDict(gene_dicts, overlappingGeneList(gene_dicts))
-    print("2. Overlapping genes and their information has been stored in match.")
+    print("DEGsMerge: 2. Overlapping genes and their information has been stored in match.")
 
 
     # output part:
@@ -93,7 +93,7 @@ def compare_mergeMulti(input_dict):
     # create pd.dataframe
     match_df = pd.DataFrame(match_dict, index = out_cols).T
     unmatch_df = pd.DataFrame(unmatch_dict)
-    print("3. Dataframes are created.")
+    print("DEGsMerge: 3. Dataframes are created.")
 
     print(match_df.head(5))
 
@@ -104,8 +104,8 @@ def compare_mergeMulti(input_dict):
     match_df.to_csv(match_name, sep = "\t", index = False)
     unmatch_df.to_csv(unmatch_name, sep = "\t", index = False)
     
-    print("4. Output tables have been saved.")
-    print("Program completed.")
+    print("DEGsMerge: 4. Output tables have been saved.")
+    print("DEGsMerge: 5. Program completed.")
 
     return match_df, unmatch_df
 

@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
 # hypergeometric: setting parsing input
-# version1: 2024/12/16
+# version1: 2024/12/21
 
+"""
+parse_out.reverse determine whether cutoff values of the DEGs should be
+below or above the threshold. Default setting is "BELOW", however, adding 
+ --reverse parameter revert the determination. 
+"""
 
 
 def checkInputMode(parse_out):
+	
+    # determine whether DEGs should below or above pvalue = 0.05
+    determine = ["BELOW"]
+    if parse_out.reverse:
+        determine = ["ABOVE"]
+	
 
     # check Mode: 
     if parse_out.DEG:
@@ -29,7 +40,7 @@ def checkInputMode(parse_out):
                     # pvalue and padj are supposed to have 1 cutoff value
                     if len(value) == 1:
                         #DEG_select_Dict[item].append("BELOW")
-                        DEG_select_Dict[item] = ["BELOW"] + DEG_select_Dict[item]
+                        DEG_select_Dict[item] = determine + DEG_select_Dict[item]
 
                     # log2FC is supposed to have 2 cutoff values for ranging. 
                     elif len(value) == 2:
