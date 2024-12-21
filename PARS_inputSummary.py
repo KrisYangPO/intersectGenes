@@ -28,7 +28,7 @@ def createInputDict(parse_out, sumList):
         compareMode = "cluster"
         DEG_selection = False
         print("InputSummary: CompareMode is: ", compareMode)
-        print("InputSummary: Mode-cluster: ", parse_out.cluster, "Mode-DEG: ", sumList[2], parse_out.DEG)
+        print("InputSummary: Mode-cluster: ", parse_out.cluster, "Mode-DEG: ", sumList, parse_out.DEG)
 
     
     # create input dictionary:
