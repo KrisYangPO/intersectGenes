@@ -5,7 +5,7 @@
 import pandas as pd
 from glob import glob
 from PARS_mergeInterArgpars import *
-from PARS_checkInput import *
+from PARS_checkInput_v2 import *
 from PARS_inputSummary import *
 
 # invoke:
@@ -22,13 +22,17 @@ def summarizeInput():
 
     # check summary check is True:
     if check:
+        print("InputDict: CheckInput: {}".format(check))
+
         if inputProg.DEG:
             DEG_condition_df = pd.DataFrame(DEG_condition, index = ["Select", "Cutoff"]).T 
             print("InputDict: Mode is DEG.")
             print("InputDict: DEG condition: \n", DEG_condition_df)
 
         elif inputProg.cluster: print("InputDict: Mode is cluster.")
-    else: print("Checkpoint: Erroneous input information.")
+    else:
+        print("CheckInputERROR: Erroneous input information. Abort.")
+        return
 
 
 
