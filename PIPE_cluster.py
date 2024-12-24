@@ -4,7 +4,6 @@
 
 import pandas as pd
 import os
-from glob import glob
 from Clus_find2Index import *
 from Clus_extractElements import *
 from Clus_compareClus import *

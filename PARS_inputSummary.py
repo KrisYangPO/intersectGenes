@@ -6,20 +6,17 @@ from glob import glob
 import os
 
 # summarize input information into dictionary and subject it to pipeline:
-def createInputDict(parse_out, sumList):
+def createInputDict(parse_out, DEG_selection):
 
     # setting input environment:
     path = parse_out.inputPath
     os.chdir(path)
     files = list(sorted(glob("*bed")))
     
-
-    
     # determine mode: 
     # DEG:
     if parse_out.DEG:
         compareMode = "DEG"
-        DEG_selection = sumList
         print("InputSummary: CompareMode is: ", compareMode)
         print("InputSummary: DEG selection condition: ", DEG_selection)
     
@@ -28,7 +25,7 @@ def createInputDict(parse_out, sumList):
         compareMode = "cluster"
         DEG_selection = False
         print("InputSummary: CompareMode is: ", compareMode)
-        print("InputSummary: Mode-cluster: ", parse_out.cluster, "Mode-DEG: ", sumList, parse_out.DEG)
+        print("InputSummary: Mode-cluster: ", parse_out.cluster, "Mode-DEG: ", DEG_selection, parse_out.DEG)
 
     
     # create input dictionary:

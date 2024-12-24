@@ -3,7 +3,6 @@
 # version1: 2024/7/20
 
 import pandas as pd
-from glob import glob
 from Merge_filterDEGs_v2 import *
 from Merge_multiMerge import *
 from Merge_formGeneDict import *

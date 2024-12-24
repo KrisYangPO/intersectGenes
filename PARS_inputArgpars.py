@@ -17,6 +17,21 @@ def parseInput():
         help = "indicate your working directory of the input files.",
         default = "./",
         required = True)
+    
+    prog_parse.add_argument(
+        "-inf", "--inputfiles", 
+        type = str,
+        nargs = "+",
+        help = "indicate the input files.",
+        default = False,
+        required = False)
+    
+    prog_parse.add_argument(
+        "--inputformat", 
+        type = str,
+        help = "indicate the format of the input files.",
+        default = "bed",
+        required = False)
 
     prog_parse.add_argument(
         "--outputName", 
@@ -113,6 +128,8 @@ def parseInput():
     # report 
     blank = 20
     print(f"{"Input path:":<{blank}} {inputProg.inputPath}")
+    print(f"{"Input file:":<{blank}} {inputProg.inputfiles}")
+    print(f"{"Input format:":<{blank}} {inputProg.inputformat}")
     print(f"{"Output name:":<{blank}} {inputProg.outputName}")
     print(f"{"Output path:":<{blank}} {inputProg.outputPath}")
     print(f"{"Target column:":<{blank}} {inputProg.targetIndex}")
@@ -123,8 +140,9 @@ def parseInput():
     print(f"{"padj:":<{blank}} {inputProg.padj}")
     print(f"{"Log2FC:":<{blank}} {inputProg.log2FC}")
     print(f"{"Select mode:":<{blank}} {inputProg.selectionMmode}")
-    print(f"{"Reverse select:":<{blank}} {inputProg.reverse}")  
+    print(f"{"Reverse select:":<{blank}} {inputProg.reverse}")
     print(f"{"Cluster indexes:":<{blank}} {inputProg.clusterIndexes}")
+
 
     return inputProg
 

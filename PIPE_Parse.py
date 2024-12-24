@@ -3,10 +3,9 @@
 # version 3: 2024/12/12
 
 import pandas as pd
-from glob import glob
-from PARS_mergeInterArgpars import *
+from PARS_inputArgpars import *
 from PARS_checkInput_v2 import *
-from PARS_inputSummary import *
+from PARS_inputSummary_v2 import *
 
 # invoke:
 def summarizeInput():  
@@ -37,16 +36,10 @@ def summarizeInput():
 
 
     # gain input information from parse. 
-    input_dict = createInputDict(parse_out = parseOut , sumList = DEG_condition)
+    input_dict = createInputDict(parse_out = parseOut , DEG_selection = DEG_condition)
 
     # show all parameters again:
     for i, j in input_dict.items(): print(f"{i:<{30}} {j}")
 
     # return to pipeline
     return input_dict
-
-
-
-# # call function
-# if __name__ == "__main__":
-#     summarizeInput()
