@@ -1,24 +1,24 @@
 # testing EXXE_parseinput.py 
 
 
-# # Example: DEG mode
-# input_p=/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_reverse/
-# output_file=MERGE_DEGs_padj0.05_CCAR1.bed
-# input_index=3
-# deg=/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_DEG_select/DESeq2_geneDEG.txt
+# Example: DEG mode
+input_p=/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_reverse/
+output_file=MERGE_DEGs_padj0.05_CCAR1.bed
+input_index=3
+deg=/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_DEG_select/DESeq2_geneDEG.txt
 
-# /Users/popoyang/Documents/Coding/Git_repos/hyperIntersect/EXE_MergeCluster_parse_v5.py \
-#  --inputPath ${input_p} \
-#  --outputName ${output_file} \
-#  --outputPath ${input_p}output/ \
-#  --targetIndex ${input_index} \
-#  --DEG \
-#  --DEGFiles ${deg} \
-#  --pvalue 0.05 \
-#  --padj 0.05 \
-#  --log2FC -1 1 \
-#  --selectionMmode range \
-#  --clusterIndexes 7 20
+/Users/popoyang/Documents/Coding/Git_repos/hyperIntersect/EXE_MergeCluster_parse_v5.py \
+ --inputPath ${input_p} \
+ --outputName ${output_file} \
+ --outputPath ${input_p}output/ \
+ --targetIndex ${input_index} \
+ --DEG \
+ --DEGFiles ${deg} \
+ --pvalue 0.05 \
+ --padj 0.05 \
+ --log2FC -1 1 \
+ --selectionMmode range \
+ --clusterIndexes 7 20
 
 
 # # cluster mode
@@ -75,20 +75,20 @@
 #  --clusterIndexes 7 20
 
 
-# cluster mode
-# test inputfiles and file format:
-input_p=/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_inputfiles/
-output_file=MERGE_CCAR1_vs_PolIIS5.bed
-input_index=3
-# deg=/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_DEG_select/DESeq2_geneDEG.txt
+# # cluster mode
+# # test inputfiles and file format:
+# input_p=/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_inputfiles/
+# output_file=MERGE_CCAR1_vs_PolIIS5.bed
+# input_index=3
+# # deg=/Users/popoyang/Documents/Coding/Python/NGS/mergeIntersect/mergeIntersect_parse/test/Test_DEG_select/DESeq2_geneDEG.txt
 
-/Users/popoyang/Documents/Coding/Git_repos/hyperIntersect/EXE_MergeCluster_parse_v5.py \
- --inputPath ${input_p} \
- --inputfiles heatmap_refGene_log2_TERC_vs_SC_CCAR1.bed heatmap_refGene_log2_TERC_vs_SC_PolIIS5.bed \
- --inputformat bed \
- --outputName ${output_file} \
- --outputPath ${input_p}output/ \
- --targetIndex ${input_index} \
- --cluster \
- --clusterIndexes 12 25
+# /Users/popoyang/Documents/Coding/Git_repos/hyperIntersect/EXE_MergeCluster_parse_v5.py \
+#  --inputPath ${input_p} \
+#  --inputfiles heatmap_refGene_log2_TERC_vs_SC_CCAR1.bed heatmap_refGene_log2_TERC_vs_SC_PolIIS5.bed \
+#  --inputformat bed \
+#  --outputName ${output_file} \
+#  --outputPath ${input_p}output/ \
+#  --targetIndex ${input_index} \
+#  --cluster \
+#  --clusterIndexes 12 25
 

@@ -5,7 +5,7 @@
 import pandas as pd
 from PARS_inputArgpars import *
 from PARS_checkInput_v2 import *
-from PARS_inputSummary_v2 import *
+from PARS_inputDict_v2 import *
 
 # invoke:
 def summarizeInput():  
@@ -29,17 +29,22 @@ def summarizeInput():
             print("InputDict: DEG condition: \n", DEG_condition_df)
 
         elif inputProg.cluster: print("InputDict: Mode is cluster.")
+
+
+        # gain input information from parse. 
+        input_dict = createInputDict(parse_out = parseOut , DEG_selection = DEG_condition)
+
+        # show all parameters again:
+        for i, j in input_dict.items(): print(f"{i:<{30}} {j}")
+
+        # return to pipeline
+        return input_dict
+    
+    
     else:
         print("CheckInputERROR: Erroneous input information. Abort.")
         return
 
 
 
-    # gain input information from parse. 
-    input_dict = createInputDict(parse_out = parseOut , DEG_selection = DEG_condition)
 
-    # show all parameters again:
-    for i, j in input_dict.items(): print(f"{i:<{30}} {j}")
-
-    # return to pipeline
-    return input_dict

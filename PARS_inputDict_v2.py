@@ -33,7 +33,7 @@ def createInputDict(parse_out, DEG_selection):
                 if parse_out.inputformat in file: 
                     files.append(file)
                 else:
-                    print("InputSummaryERROR: File format Error with file: {0} and input format: {1}, Abort this: {2}.".format(file, parse_out.inputformat, file))
+                    print("InputSummaryReport: File format Error with file: {0} and input format: {1}, Discard this: {2}.".format(file, parse_out.inputformat, file))
             else:
                 print("InputSummaryERROR: File format must be given, if --inputfiles was not defined.")
 
